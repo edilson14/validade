@@ -35,7 +35,8 @@ class _ProductListPageState extends State<ProductListPage> {
               return Container(
                 color: controller.products[index].color,
                 child: ListTile(
-                  title: Text(controller.products[index].name),
+                  title: Text(
+                      '${controller.products[index].name} - ${controller.products[index].lote}'),
                   subtitle: Text(
                     'Válido apenas em  ${controller.products[index].validateInDays()} dias',
                     style: const TextStyle(

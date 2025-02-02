@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:validade/src/models/product_model.dart';
+import 'package:validade/src/validators/product_params_validator.dart';
+
+import '../dto/product_params.dart';
 
 class CreateProductModal extends StatelessWidget {
-  var productModel = ProductModel();
-  final ProductModelValidor productModelValidor = ProductModelValidor();
+  final productParamns = ProductParams.fromEmpty();
 
-  final Function(ProductModel product) onSave;
+  final productParansValidator = ProductParamsValidator();
+
+  final Function(ProductParams prodcutParams) onSave;
   CreateProductModal({super.key, required this.onSave});
 
-  var formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +25,9 @@ class CreateProductModal extends StatelessWidget {
             children: [
               const Text('Novo Produto'),
               TextFormField(
-                validator: productModelValidor.byField(productModel, 'name'),
-                onChanged: (value) {
-                  productModel.name = value;
-                },
+                validator:
+                    productParansValidator.byField(productParamns, 'name'),
+                onChanged: productParamns.setName,
                 decoration: const InputDecoration(
                   labelText: 'Nome do Produto',
                   border: OutlineInputBorder(),
@@ -33,10 +35,9 @@ class CreateProductModal extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                onChanged: (value) {
-                  productModel.lote = value;
-                },
-                validator: productModelValidor.byField(productModel, 'lote'),
+                onChanged: productParamns.setLote,
+                validator:
+                    productParansValidator.byField(productParamns, 'lote'),
                 decoration: const InputDecoration(
                   labelText: 'Lote',
                   border: OutlineInputBorder(),
@@ -45,15 +46,14 @@ class CreateProductModal extends StatelessWidget {
               const SizedBox(height: 20),
               TextFormField(
                 keyboardType: TextInputType.datetime,
-                validator:
-                    productModelValidor.byField(productModel, 'validateDate'),
+                validator: productParansValidator.byField(
+                    productParamns, 'validateDate'),
                 onChanged: (value) {
                   if (value.length == 10) {
                     value = value.replaceAll('/', '');
-                    productModel.validateDate = DateTime.parse(value);
+                    productParamns.validade = DateTime.parse(value);
                   }
                 },
-                inputFormatters: const [],
                 decoration: const InputDecoration(
                   labelText: 'Data de Validade',
                   border: OutlineInputBorder(),
@@ -75,7 +75,7 @@ class CreateProductModal extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       if ((formKey.currentState?.validate() ?? false)) {
-                        onSave(productModel);
+                        onSave(productParamns);
                       }
                     },
                     child: const Text('Salvar'),
