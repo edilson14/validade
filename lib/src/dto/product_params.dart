@@ -14,15 +14,15 @@ class ProductParams {
         validade: DateTime.now(),
       );
 
-  setName(String name) {
-    name = name;
+  void setName(String newName) {
+    name = newName;
   }
 
-  setLote(String lote) {
-    lote = lote;
+  void setLote(String newLote) {
+    lote = newLote;
   }
 
-  setValidade(DateTime validade) {
-    validade = validade;
+  void setValidade(DateTime novoValidade) {
+    validade = novoValidade;
   }
 }

@@ -5,10 +5,11 @@ import '../dto/product_params.dart';
 
 class CreateProductModal extends StatelessWidget {
   final productParamns = ProductParams.fromEmpty();
+  final _dateController = TextEditingController();
 
   final productParansValidator = ProductParamsValidator();
 
-  final Function(ProductParams prodcutParams) onSave;
+  final Function(ProductParams product) onSave;
   CreateProductModal({super.key, required this.onSave});
 
   final formKey = GlobalKey<FormState>();
@@ -45,19 +46,35 @@ class CreateProductModal extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                keyboardType: TextInputType.datetime,
-                validator: productParansValidator.byField(
-                    productParamns, 'validateDate'),
-                onChanged: (value) {
-                  if (value.length == 10) {
-                    value = value.replaceAll('/', '');
-                    productParamns.validade = DateTime.parse(value);
+                controller: _dateController
+                  ..text = productParamns.validade.toString().substring(0, 10),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    initialDate: DateTime.now().add(const Duration(days: 1)),
+                    context: context,
+                    firstDate: DateTime.now().add(
+                      const Duration(days: 1),
+                    ),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 600),
+                    ),
+                  );
+
+                  if (pickedDate != null) {
+                    _dateController.text =
+                        pickedDate.toString().substring(0, 10);
+                    productParamns.setValidade(pickedDate);
                   }
                 },
+                keyboardType: TextInputType.datetime,
+                validator: productParansValidator.byField(
+                  productParamns,
+                  'validateDate',
+                ),
                 decoration: const InputDecoration(
                   labelText: 'Data de Validade',
                   border: OutlineInputBorder(),
-                  hintText: 'yyyy/mm/dd',
                 ),
               ),
               const SizedBox(height: 20),
