@@ -1,14 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:validade/src/adapters/product_adapter.dart';
-import 'package:validade/src/dto/product_params.dart';
-import 'package:validade/src/models/models.dart';
-import 'package:validade/src/repositories/produc_repositore.dart';
-import 'package:validade/src/services/product_service.dart';
+import 'package:validade/src/data/adapters/product_adapter.dart';
+import 'package:validade/src/domain/dto/product_params.dart';
+import 'package:validade/src/domain/models/models.dart';
+import 'package:validade/src/data/repositories/produc_repositore.dart';
+import 'package:validade/src/data/services/product_service.dart';
 
 class ProductController extends ChangeNotifier {
-  var _products = <ProductModel>[];
+  final _products = <ProductModel>[];
 
   List<ProductModel> get products => _products;
 
@@ -23,8 +21,8 @@ class ProductController extends ChangeNotifier {
   void createProduct(ProductParams product) {
     _products.add(ProductAdapter().productModelFromParans(product));
     _sortProducts();
-    _productService
-        .saveProduct(jsonEncode(_products.map((e) => e.toMap()).toList()));
+    // _productService
+    //     .saveProduct(jsonEncode(_products.map((e) => e.toMap()).toList()));
     notifyListeners();
   }
 
@@ -33,8 +31,13 @@ class ProductController extends ChangeNotifier {
   }
 
   void loadProducts() async {
-    final products = await productrepository.getAllProducts();
-    _products = products;
+    // final products =
+    await productrepository.getProducts();
+    // products.fold((l) => null, (r) {
+    //   _products.add(r);
+    //   notifyListeners();
+    // });
+    // _products = products;
     _sortProducts();
     notifyListeners();
   }

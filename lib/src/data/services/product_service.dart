@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:result_dart/result_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:validade/src/data/adapters/product_adapter.dart';
 import 'package:validade/src/domain/dto/meat_product_parans.dart';
 import 'package:validade/src/domain/enteties/enteties.dart';
-import 'package:validade/src/domain/models/product_model.dart';
 
 String productkey = 'product';
 
@@ -21,12 +19,14 @@ class ProductService {
   }
 
   AsyncResult<List<MeatEntetie>> getProducts() async {
-    final prefs = await SharedPreferences.getInstance();
-    var product = jsonDecode(prefs.getString(productkey) ?? '[]');
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      var product = jsonDecode(prefs.getString(productkey) ?? '[]');
 
-    return product
-        .map<ProductModel>((e) => ProductAdapter().productFromJson(e))
-        .toList();
+      return product.map<MeatEntetie>((e) => MeatEntetie.fromJson(e)).toList();
+    } catch (e) {
+      return <MeatEntetie>[].toSuccess();
+    }
   }
 
   AsyncResult<Unit> deleteProduct(MeatProductParans product) async {

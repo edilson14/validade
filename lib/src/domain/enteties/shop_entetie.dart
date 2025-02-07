@@ -8,4 +8,12 @@ class ShopEntetie {
     required this.address,
     required this.cep,
   });
+
+  factory ShopEntetie.fromJson(Map<String, dynamic> json) {
+    return ShopEntetie(
+      name: json['name'],
+      cep: json['cep'],
+      address: json['address'],
+    );
+  }
 }

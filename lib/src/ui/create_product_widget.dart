@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:validade/src/validators/product_params_validator.dart';
+import 'package:validade/src/domain/validators/product_params_validator.dart';
 
-import '../dto/product_params.dart';
+import '../domain/dto/product_params.dart';
 
 class CreateProductModal extends StatelessWidget {
   final productParamns = ProductParams.fromEmpty();

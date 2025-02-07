@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:validade/src/controllers/product_controller.dart';
+import 'package:validade/src/ui/controllers/product_controller.dart';
 import 'package:validade/src/ui/create_product_widget.dart';
 
 class ProductListPage extends StatefulWidget {

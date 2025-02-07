@@ -12,7 +12,8 @@ class ProducRepositore implements ProductRepositorieInterface {
   @override
   AsyncResult<List<MeatEntetie>> getProducts() async {
     try {
-      return await _productService.getProducts();
+      var product = await _productService.getProducts();
+      return product;
     } catch (e) {
       return AsyncResult.error(e);
     }
