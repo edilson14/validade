@@ -5,7 +5,7 @@ import '../enteties/shop_entetie.dart';
 
 abstract interface class ShopRepositorieInterface {
   AsyncResult<List<ShopEntetie>> getShops();
-  AsyncResult<ShopEntetie> createShop(ShopParans shop);
+  AsyncResult<Unit> createShop(ShopParans shop);
   AsyncResult<Unit> deleteShop(ShopParans shop);
   AsyncResult<Unit> updateShop(ShopParans shop);
 }
