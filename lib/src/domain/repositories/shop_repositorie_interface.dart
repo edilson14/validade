@@ -7,5 +7,4 @@ abstract interface class ShopRepositorieInterface {
   AsyncResult<List<ShopEntetie>> getShops();
   AsyncResult<Unit> createShop(ShopParans shop);
   AsyncResult<Unit> deleteShop(ShopParans shop);
-  AsyncResult<Unit> updateShop(ShopParans shop);
 }

@@ -6,5 +6,4 @@ abstract interface class ProductRepositorieInterface {
   AsyncResult<List<MeatEntetie>> getProducts();
   AsyncResult<Unit> createProduct(MeatProductParans product);
   AsyncResult<Unit> deleteProduct(MeatProductParans product);
-  AsyncResult<Unit> editProduct(MeatProductParans product);
 }
