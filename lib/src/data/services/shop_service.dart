@@ -3,16 +3,15 @@ import 'dart:convert';
 import 'package:result_dart/result_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validade/src/data/adapters/shop_adapter.dart';
-import 'package:validade/src/domain/dto/shop_parans.dart';
 import 'package:validade/src/domain/enteties/enteties.dart';
 
 const String shopKey = 'shop';
 
 class ShopService {
-  AsyncResult<Unit> saveShop(ShopParans shop) async {
+  AsyncResult<Unit> saveShop(String shop) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      prefs.setString(shopKey, shop.toString());
+      prefs.setString(shopKey, shop);
       return const Success(unit);
     } catch (e) {
       return AsyncResult.error(e);
@@ -20,9 +19,14 @@ class ShopService {
   }
 
   AsyncResult<List<ShopEntetie>> getShops() async {
-    final prefs = await SharedPreferences.getInstance();
-    var shop = jsonDecode(prefs.getString(shopKey) ?? '[]');
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      var shop = jsonDecode(prefs.getString(shopKey) ?? '[]');
 
-    return shop.map<ShopEntetie>((e) => ShopAdapter().shopFromJson(e)).toList();
+      return Success(
+          shop.map<ShopEntetie>((e) => ShopAdapter().shopFromJson(e)).toList());
+    } catch (e) {
+      return const Success(<ShopEntetie>[]);
+    }
   }
 }

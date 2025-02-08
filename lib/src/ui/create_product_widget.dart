@@ -20,12 +20,12 @@ class CreateProductModal extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Form(
         key: formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: SingleChildScrollView(
           child: Column(
             children: [
               const Text('Novo Produto'),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator:
                     productParansValidator.byField(productParamns, 'name'),
                 onChanged: productParamns.setName,
@@ -36,6 +36,7 @@ class CreateProductModal extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: productParamns.setLote,
                 validator:
                     productParansValidator.byField(productParamns, 'lote'),
@@ -46,6 +47,7 @@ class CreateProductModal extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _dateController
                   ..text = productParamns.validade.toString().substring(0, 10),
                 readOnly: true,

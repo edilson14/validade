@@ -16,4 +16,12 @@ class ShopEntetie {
       address: json['address'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'cep': cep,
+      'address': address,
+    };
+  }
 }
